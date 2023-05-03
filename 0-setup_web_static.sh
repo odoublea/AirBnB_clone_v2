@@ -9,10 +9,10 @@ then
 fi
 
 # Create the necessary directories if they don't exist
-mkdir -p /data/ /data/web_static/ /data/web_static/releases/ /data/web_static/shared/ /data/web_static/releases/test/
+sudo mkdir -p /data/ /data/web_static/ /data/web_static/releases/ /data/web_static/shared/ /data/web_static/releases/test/
 
 # Create a HTML file for testing purposes
-echo "
+sudo echo '
 <html lang="en">
 
     <head>
@@ -32,16 +32,16 @@ echo "
     </body>
 
 </html>
-" >> /data/web_static/releases/test/index.html
+' >> /data/web_static/releases/test/index.html
 
 # Create a symbolic link to the current release. If the symbolic link already exists, it should be deleted and recreated every time the script is ran.
-ln -sf /data/web_static/current /data/web_static/releases/test/
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # Set ownership of /data/ to the ubuntu user and group - recursive
-chown -R ubuntu:ubuntu /data/
+sudo chown -R ubuntu:ubuntu /data/
 
 # Update the Nginx configuration to serve content from the /data/web_static/current directory
 sudo sed -i '41i\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
 
 # Restart Nginx to apply the new configuration
-service nginx restart
+sudo service nginx restart
