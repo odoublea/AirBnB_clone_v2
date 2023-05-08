@@ -6,6 +6,7 @@ from datetime import datetime
 
 
 def do_pack():
+    '''do pack function'''
     local("mkdir -p versions")
     time = datetime.now().strftime("%Y%m%d%H%M%S")
     archive_path = "versions/web_static_{}.tgz".format(time)
