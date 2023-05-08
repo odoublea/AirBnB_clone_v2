@@ -33,18 +33,18 @@ def do_deploy(archive_path):
     # without extension> on web server
     folder_name = archive_filename.split(".")[0]
     release_path = "/data/web_static/releases/{}".format(folder_name)
-    run("sudo mkdir -p {}".format(release_path))
-    run("sudo tar -xzf {} -C {} --strip-components=1".format(remote_path,
-                                                             release_path))
+    run("mkdir -p {}".format(release_path))
+    run("tar -xzf {} -C {} --strip-components=1".format(remote_path,
+                                                        release_path))
 
     # Delete archive from web server
-    run("sudo rm {}".format(remote_path))
+    run("rm {}".format(remote_path))
 
     # Delete symbolic link /data/web_static/current from web server
     current_path = "/data/web_static/current"
-    run("sudo rm -f {}".format(current_path))
+    run("rm -f {}".format(current_path))
 
     # Create new symbolic link /data/web_static/current on web server
-    run("sudo ln -s {} {}".format(release_path, current_path))
+    run("ln -s {} {}".format(release_path, current_path))
 
     return True
