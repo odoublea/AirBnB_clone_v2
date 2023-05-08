@@ -2,7 +2,7 @@
 # Bash script that sets up your web servers for the deployment of web_static
 
 # Install Nginx if not already installed
-if [ $(dpkg-query -W -f='${Status}' nginx 2>/dev/null | grep -c "ok installed") -eq 0 ];
+if [ $(dpkg-query -W -f='${Status}' nginx 2>/dev/null | grep -c "ok installed") -eq '0' ];
 then
   sudo apt-get update
   sudo apt-get install nginx -y
@@ -32,7 +32,7 @@ sudo echo '
     </body>
 
 </html>
-' >> /data/web_static/releases/test/index.html
+' | sudo tee -a /data/web_static/releases/test/index.html
 
 # Create a symbolic link to the current release. If the symbolic link already exists, it should be deleted and recreated every time the script is ran.
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
