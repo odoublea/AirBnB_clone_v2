@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 # Install Nginx if it not already installed
-if ! command -v nginx &> /dev/null
-then
-    sudo apt-get update
-    sudo apt-get -y install nginx
+if ! command -v nginx &>/dev/null; then
+  sudo apt-get update
+  sudo apt-get -y install nginx
 fi
 
 # Create the folder /data/ if it doesn’t already exist
@@ -16,7 +15,7 @@ sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
 # Create a fake HTML file /data/web_static/releases/test/index.html (with simple content, to test your Nginx configuration)
-echo "<html lang="en">
+echo '<html lang="en">
   <head>
 	<meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,8 +27,7 @@ echo "<html lang="en">
   <body>
     <h1>This is a test page! 😁</h1>
   </body>
-</html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
-
+</html>' | sudo tee /data/web_static/releases/test/index.html >/dev/null
 
 # Create a symbolic link /data/web_static/current linked to the /data/web_static/releases/test/ folder. If the symbolic link already exists, it should be deleted and recreated every time the script is ran.
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
@@ -38,5 +36,6 @@ sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 
 # Update the Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static (ex: https://mydomainname.tech/hbnb_static).
-sudo sed -i '/listen 80 default_server;/a location /hbnb_static {\n\talias /data/web_static/current/;\n}\n' /etc/nginx/sites-available/default
+sudo sed -i '/listen 80 default_server;/a location /hbnb_static {\n\talias 
+/data/web_static/current/;\n}\n' /etc/nginx/sites-available/default
 sudo service nginx restart
